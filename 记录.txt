@@ -1,0 +1,122 @@
+JS
+9/4  基本语法；
+9/5  数据类型和变量：数组里面的元素可以是任意数据类型
+                     创建数组通过Array(1,2,3);
+                     通过调用数组的索引来实现var arr=[1,2,3,'hello'];
+                         arr[0]=1;
+
+2016/9/6 
+git 创建版本库
+
+
+JS  字符串：多行字符串；模板字符串；操作字符串；
+s.toUpperCase()；将S字符串转化为大写输出；
+lower=s.toLowerCase()；将S字符串转化为小写然后赋值给lower；
+indexOf()搜索指定字符串出现的位置；
+s.substring(0,5)；返回指定索引区间的字符串；
+
+2016/9/7
+git 时光机穿梭 git status：告诉你有文件被修改过
+                git diff：可以查看修改后的内容 
+
+
+JS  数组：特色数组可以包含任意数据类型
+          slice()/划片/它截取数组的部分元素，然后返回给一个新的数组
+          注意：slice的起止参数包括开始索引，担不包括结束索引。如果不给slice()任何参数，则会从头复制到尾给另外一个数组。
+    var aCopy=arr.slice()；
+    aCopy===arr；//false
+           push()和pop
+           push()向数组的末尾添加若干元素，POP向数组的最后一个元素删去；
+           unshift和shift
+           如果往数组的头部添加若干元素，使用unshift()方法，shift()方法则把数组的第一个元素删去。
+           sort()可以对当前的数组进行排序，它可以修改当前数组元素的位置，直接调用时，按默认顺序排序，利用函数可以按照我们的意愿进行排序。
+           reverse()可以把整个数组掉个个，翻转；
+           solice()/粘贴处/方法是修改数组的万能方法，可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素。
+           arr.splice(2,3，'google','Facebook');//返回删除的元素[‘Yahoo’，‘AOL’，'Excite']
+           arr；//[‘microsoft’，'Apple'，'Google'，'facebook‘，’Oracle‘]
+           concat()方法是把俩个数组链接在一起
+           var added=arr.concat([1，2,3])
+           added;//[‘A’，‘B’，'C'，1,2,3]
+           arr；//['A','B','C']
+
+
+
+2016/9/8
+
+JS  对象
+    var xiaoming={
+                  name;'小明',
+                  brith;1990,          
+                  school;'No.1 Middle School',
+                  height;1.70,
+                  weight;65,
+                  score;null
+                  };
+     xiaoming.name;//'小明'
+     xiaoming.brith;//1990
+
+
+访问属性是通过.操作符号完成的，担这要求属性名必须是一个有效的变量名。如果属性名包含特殊的字符，就必须用''括起来；
+     var xiaohong={
+                   name;'小红',
+                   'middle school';'N0.1 Middle School'
+                    };
+      xiaohong['middle school'];//'No.1 Middle School'
+      xiaohong['name'];//'小红'
+      xiaohong.name;//'小红'
+
+
+Github 版本倒退
+       提交第三次版本：
+       git add 123.txt
+       git commit -m 'append GPL'
+       退回上一个版本：
+       git reset --hard HEAD~
+       再次返回第三个版本
+       git reset --hard 36524565//为 append GPL 的commit ID号 仅写前几位号码即可，当然如果关机了或则其他的情况忘记了commit ID 号码了，则我们可以使用
+       git reflog 返回查看每一次操作的版本commit ID 号码
+
+
+
+2016/9/9 
+
+JS    条件判断，循环，MAP和Set
+
+      条件判断：循环： for...in循环的一个变体是for...in循环，它可以把一个对象的所有属性一次循环出来
+      例如;var o={
+                  name:'jack',
+                  age:20,
+                  city:'beijing' 
+                 };
+            for(var key in o){
+             aler(key);//'name','age','city'
+                              }
+        数据类型Map是一组键值对的结构，具有极快的查找的速度
+        引例：var m=new Map([['Michael',95],['Bob',75],['happy',80]])
+                  m.get('Micheal');
+        
+         初始化Map需要一个二维数组，或者直接初始化一个空Map。
+         var m=new Map();
+         m.set('Adam',67);
+         m.set('Bob',80);
+         m.has('Adam');//是否存在kay'Adam':ture,
+         m.get('Adam');
+         m.delete('Adam');//删除KEY'Adam'.
+         m.get('Adam');//undefined
+         数据类型Set和Map.类似，也是一组key的集合，但不存在value。由于key不能重复，所以在Set中，没有重复的key。
+         var s1=new Set();//空Set
+         var s2=new Set([1,2,3]);//1,2,3
+         重复元素在Set中自动被过滤掉;
+         可以通过add(key)方法可以添加元素到Set中，可以重复添加担不会有效果
+         s.add(4);//1,2,3,4
+         s.add(4);//1,2,3,4
+         通过delete（key）方法可以删除元素；
+         var s=new Set([1,2,3]);
+         s;//Set{1,2,3}
+         s.delete{3};
+         s;//Set{1,2}
+
+
+Github   工作区（创库的文件夹）和缓存区（.git里面的index文件）
+         管理修改
+         
