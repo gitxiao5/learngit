@@ -6,7 +6,7 @@ JS
                          arr[0]=1;
 
 2016/9/6 
-git 创建版本库
+git 创建版本库  git init
 
 
 JS  字符串：多行字符串；模板字符串；操作字符串；
@@ -120,3 +120,38 @@ JS    条件判断，循环，MAP和Set
 Github   工作区（创库的文件夹）和缓存区（.git里面的index文件）
          管理修改
          
+
+
+
+
+2016/9/10  
+
+JS        iterable数据类型：是一种新型的数据类型包含了Array，Map，Set。
+          具有此数据类型的集合可以通过引入for...of循环来遍历
+
+          for...in和for...of的区别：
+          当我们手动给Array对象添加额外的属性后，for...in循环将带来意想不到的效果
+          如：var a=['A','B','C'];
+          a.name='hello';
+          for(var x in a){
+                           alter(x);
+                          }
+          for...in循环将把name包括在内，担Array的length属性却不包括在内。
+          for...of则完全修复了这些问题结果显示没有name属性。
+          forEach()方法是ES5.1标准引入，但是Set没有索引，因此回调函数的前俩个参数都是元素的本身；
+          Map的回调参数依次为value，key，map本身；
+          var m=new Map{[1,'x'],[2,'y'],[3,'z']};
+          m.forEach(unction,{value,key,map})
+          alter(value);
+         });
+GitHub    管理修改，撤销修改
+          git diff HEAD -- readme.txt可以查看工作区和版本库里面的最新版本的区别；
+          git checkout -- file 可以丢弃工作区的修改；
+          git reset HEAD file可以把暂存区的修改撤掉，重新放回工作区。
+
+
+
+
+
+
+
