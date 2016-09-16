@@ -1,0 +1,38 @@
+header {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  overflow: hidden;
+  background: #e4f2fc
+}
+
+.nav-list {
+  padding: 10px 10px 5px 10px;
+}
+
+.nav-list:after {
+  content: '\0020';
+  display: block;
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+footer {
+  line-height: 27px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.tool-box {
+  margin: 0 10px;
+  padding-bottom: 5px;
+}
+
+.c_pop_wrap {
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  z-index: 1000;
+  bottom: 12px;
+  /*display: none;*/
+}
