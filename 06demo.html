@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>webGL</title>
+	<script type="text/javascript" src="../libs/three.js"></script>
+    <script type="text/javascript" src="../libs/stats.js"></script>
+    <script type="text/javascript" src="../libs/dat.gui.js"></script>
+    <style>
+       body{
+
+       	margin: 0;
+       	overflow: hidden;
+       }
+
+    </style>
+
+    <script type = "text/javascript">
+       //定义全局的场景，相机，渲染器
+       var scene;
+       var camera;
+       var renderer;
+       
+       //编写加载事件函数
+       function init(){
+
+       	var stats = initstats();
+    
+        //准备一个场景
+        scene = new THREE.Scene();
+        //准备一个透视相机 同时确定视场，长宽比，近面，远面
+        camera = new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,1000);
+        //准备一个渲染器    
+        renderer = new THREE.WebGLRenderer();
+        //定义这个渲染器的渲染场景颜色
+        renderer.setClearColor(new THREE.Color(0xEEEEEE));
+        //定义这个渲染器的渲染场景大小
+        renderer.setSize(window.innerWidth,window.innerHeight);
+        //定义这个渲染器的是否添加阴影
+        renderer.shadowMapEnabled = true;
+
+        //场景，相机，渲染器已准备就绪，接下来我们要定义我们要看到的实物
+        //定义这个平面的大小为，长60，宽为20
+        var planeGeometry = new THREE.PlaneGeometry(60,20);
+        //定义这个平面的网格使用材料
+        var planeMaterial = new THREE.MeshLambertMaterial({color:0xffffff});
+        //合成这个平面网格
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        //设置这个平面是接收阴影的
+        plane.receiveShadow = true;
+        
+        //设置这个平面的位置
+        plane.rotation.x = -0.5*Math.PI;
+        plane.position.x = 15;
+        plane.position.y = 0;
+        plane.position.z = 0;
+        //把这个平面添加到这个场景当中
+        scene.add(plane);
+
+        //定义好平面，接下来我们定义几何物体，先正方体
+        //搭建正方体骨架,它的长宽高为4，4，4
+        var cubeGeometry = new THREE.BoxGeometry(4,4,4);
+        //确定这个正方体使用的材料
+        var cubeMaterial = new THREE.MeshLambertMaterial({color:0xff0000});
+        //合成这个正常体
+        var cube = new THREE.Mesh(cubeGeometry,cubeMaterial);
+        //设置这个正方体是否投放阴影
+        cube.castShadow = true;
+        //设置这个正方体的位置
+        cube.position.set(-10,4,0);
+        //最后再把这个正方体添加到场景当中
+        scene.add(cube);
+       
+        //在定义一个球体
+        //确定这个球体的骨架，以及球体的三位参数半径为4的抽密度为20的球体
+        var sphereGeometry = new THREE.SphereGeometry(4,20,20);
+        //确定这个球体的使用材料
+        var sphereMaterial = new THREE.MeshLambertMaterial({color:'blue'});
+        //合成这个球体
+        var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
+        //设置这个球体是否投放阴影
+        sphere.castShadow = true;
+        //设置这个球体位置以及旋转的角度
+        sphere.position.set(80,40,0);
+        //最后再把这个球体添加到则个场景当中
+        scene.add(sphere);
+        
+        //设置相机的参数
+        camera.position.set(-20,40,30);
+        //拍摄的角度和位置
+        camera.lookAt(scene.position);
+
+        //设置环境光，并且投放的颜色为0c0c0c颜色偏灰色
+        var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+        //添加到场景当中
+        scene.add(ambientLight);
+         
+        //添加电光源到场景当中
+        var spotLight = new THREE.SpotLight(0xffffff);
+        //设置电光源的位置
+        spotLight.position.set(-40,50,-1);//参数应该仔细了解，控制效果
+        //设置电光源投放阴影
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+        
+        //将设置好的场景挂载到我们的页面当中进行渲染
+        document.getElementById("container").appendChild(renderer.domElement);
+
+        //设置步长
+        var step = 0;
+
+        var controls = new function(){
+        	this.rotationSpeed = 0.02;
+        	this.bouncingSpeed = 0.03;
+        };
+
+        var gui = new dat.GUI();
+        // gui.function
+        gui.add(controls,'rotationSpeed',0,0.5);
+        gui.add(controls,'bouncingSpeed',0,0.5);
+
+        render();
+        //编写渲染器函数
+        function render(){
+        	stats.update();
+        	//设置立方体的旋转速递
+        	cube.rotation.x +=controls.rotationSpeed;
+        	cube.rotation.y +=controls.rotationSpeed;
+        	cube.rotation.z +=controls.rotationSpeed;
+
+        	//设置球体的弹跳
+        	step +=controls.bouncingSpeed;
+        	sphere.position.x =20+(10*(Math.cos(step)));
+        	sphere.position.y =2+(10*Math.abs(Math.sin(step)));
+
+        	//渲染这个动画
+        	requestAnimationFrame(render);
+        	renderer.render(scene,camera);
+        }
+        
+        //编写状态函数
+        function initstats(){
+           
+           var stats = new Stats();
+
+           stats.setMode(0);//0代表我们检测的是FPS不是转换率
+
+           stats.domElement.style.position = 'absolute';
+           stats.domElement.style.left = '0px';
+           stats.domElement.style.top = '0px';
+
+
+           document.getElementById("stats").appendChild(stats.domElement);
+
+           return stats;
+
+
+        }
+
+     }
+
+     function onResize(){
+     	camera.aspect = window.innerWidth/window.innerHeight;
+     	camera.updateProjectionMatrix();
+     	renderer.setSize(window.innerWidth,window.innerHeight);
+     }
+
+     window.onload = init;
+     window.addEventListener('resize',onResize,false);
+
+
+    </script>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src='./jquery.min.js'></script>
+    <script src='./bootstrap.js'></script>
+	</head>
+	<body>
+	   <div id="stats"></div>
+	   <div id="container" class="container col-sm-12 col-xs-12"></div>
+	</body>
+	</html>	
